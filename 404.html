@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>404 — initwaza.sh</title>
+  <meta name="theme-color" content="#0d1117">
+  <link rel="stylesheet" href="/assets/css/style.css">
+</head>
+<body>
+
+<header class="site-header">
+  <a class="logo" href="/">~/initwaza<span class="ext">.sh</span></a>
+  <nav>
+    <a href="/">~/home</a>
+    <a href="/posts.html">~/posts</a>
+    <a href="/talks.html">~/talks</a>
+    <a href="/about.html">~/about</a>
+    <button id="theme-toggle" aria-label="Toggle dark/light theme" title="export TERM=light">☾☀</button>
+  </nav>
+</header>
+
+<main>
+  <div class="term">
+    <div class="term-bar">
+      <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+      <span class="term-title">warren@initwaza: ~</span>
+    </div>
+    <div class="tty">
+      <p class="prompt">warren@initwaza:~$ <span class="cmd" id="path"></span></p>
+      <p>sh: 404: command not found</p>
+      <p>Did you mean: <a href="/">cd ~</a></p>
+      <p class="prompt">warren@initwaza:~$ <span class="cursor">▊</span></p>
+    </div>
+  </div>
+</main>
+
+<footer>
+  <p>© 2026 Warren du Toit</p>
+</footer>
+
+<script>
+  document.getElementById("path").textContent = location.pathname.replace(/^\//, "") || "404";
+</script>
+<script src="/assets/js/main.js"></script>
+</body>
+</html>

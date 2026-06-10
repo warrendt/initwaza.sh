@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>~/posts — initwaza.sh</title>
+  <meta name="theme-color" content="#0d1117">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>💾</text></svg>">
+  <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+
+<header class="site-header">
+  <a class="logo" href="/">~/initwaza<span class="ext">.sh</span></a>
+  <nav>
+    <a href="/">~/home</a>
+    <a href="/posts.html">~/posts</a>
+    <a href="/talks.html">~/talks</a>
+    <a href="/about.html">~/about</a>
+    <button id="theme-toggle" aria-label="Toggle dark/light theme" title="export TERM=light">☾☀</button>
+  </nav>
+</header>
+
+<main>
+  <div class="term">
+    <div class="term-bar">
+      <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+      <span class="term-title">warren@initwaza: ~/posts</span>
+    </div>
+    <div class="tty">
+      <p class="prompt">warren@initwaza:~$ <span class="cmd">ls -lt posts/</span></p>
+      <ul class="post-list">
+        <li>
+          <time datetime="2026-06-10">2026-06-10</time>
+          <a href="/posts/hello-world.html">hello-world.sh — why this blog moved to a .sh domain</a>
+        </li>
+        <!-- newest posts on top; one <li> per post -->
+      </ul>
+      <p class="prompt">warren@initwaza:~$ <span class="cursor">▊</span></p>
+    </div>
+  </div>
+</main>
+
+<footer>
+  <p>© 2026 Warren du Toit · opinions my own</p>
+</footer>
+
+<script src="assets/js/main.js"></script>
+</body>
+</html>

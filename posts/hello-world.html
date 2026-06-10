@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>hello-world.sh — initwaza.sh</title>
+  <meta name="description" content="Why this blog moved from waza.co.za to a .sh domain.">
+  <meta name="theme-color" content="#0d1117">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>💾</text></svg>">
+  <link rel="stylesheet" href="/assets/css/style.css">
+</head>
+<body>
+
+<header class="site-header">
+  <a class="logo" href="/">~/initwaza<span class="ext">.sh</span></a>
+  <nav>
+    <a href="/">~/home</a>
+    <a href="/posts.html">~/posts</a>
+    <a href="/talks.html">~/talks</a>
+    <a href="/about.html">~/about</a>
+    <button id="theme-toggle" aria-label="Toggle dark/light theme" title="export TERM=light">☾☀</button>
+  </nav>
+</header>
+
+<main>
+  <div class="term">
+    <div class="term-bar">
+      <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+      <span class="term-title">warren@initwaza: ~/posts/hello-world</span>
+    </div>
+    <div class="tty">
+      <p class="prompt">warren@initwaza:~$ <span class="cmd">cat posts/hello-world.sh</span></p>
+      <article>
+        <h1>#!/bin/sh — hello world</h1>
+        <p class="tagline"><time datetime="2026-06-10">2026-06-10</time> · meta</p>
+
+        <p>This blog used to live at waza.co.za. It now boots from initwaza.sh.</p>
+
+        <p>Why a .sh domain? Because I am an 80s kid who never left the shell.
+        The name reads like an init script because that is what a personal site
+        is: the thing that runs first and sets up everything else.</p>
+
+        <pre><code>#!/bin/sh
+# initwaza.sh — personal init
+exec blog --topics "azure,sovereign-cloud,homelab,3d-printing"</code></pre>
+
+        <p>Expect posts on Azure sovereign cloud architecture, networking at
+        scale, the homelab, and Klipper-based 3D printing. Same content,
+        better prompt.</p>
+      </article>
+      <p class="prompt">warren@initwaza:~$ <span class="cursor">▊</span></p>
+    </div>
+  </div>
+</main>
+
+<footer>
+  <p>© 2026 Warren du Toit · opinions my own</p>
+</footer>
+
+<script src="/assets/js/main.js"></script>
+</body>
+</html>
