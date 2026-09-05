@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-8K72MTVLYD"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-8K72MTVLYD');
+  </script>
+  <title>ekm.sh — keep the keys in KSA, UAE, and ZA — initwaza.sh</title>
+  <meta name="description" content="Managed HSM External Key Management, in Warren-speak: key sovereignty for KSA, UAE, South Africa, and the rest of the continent. Last-resort architecture, not a flex.">
+  <meta name="theme-color" content="#0d1117">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>💾</text></svg>">
+  <link rel="stylesheet" href="/assets/css/style.css">
+</head>
+<body>
+
+<header class="site-header">
+  <a class="logo" href="/">~/initwaza<span class="ext">.sh</span></a>
+  <nav>
+    <a href="/">~/home</a>
+    <a href="/posts.html">~/posts</a>
+    <a href="/talks.html">~/talks</a>
+    <a href="/about.html">~/about</a>
+    <button id="theme-toggle" aria-label="Toggle dark/light theme" title="export TERM=light">☾☀</button>
+  </nav>
+</header>
+
+<main>
+  <div class="term">
+    <div class="term-bar">
+      <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+      <span class="term-title">warren@initwaza: ~/posts/ekm-managed-hsm</span>
+    </div>
+    <div class="tty">
+      <p class="prompt">warren@initwaza:~$ <span class="cmd">cat posts/ekm-managed-hsm.sh</span></p>
+      <article>
+        <h1>#!/bin/sh — keep the keys on your floor</h1>
+        <p class="tagline"><time datetime="2026-09-05">2026-09-05</time> · sovereign-cloud · managed-hsm · ekm</p>
+
+        <p>Howzit. Let’s talk about the feature every regulated-industry architect
+        in Riyadh, Abu Dhabi, and Sandton is going to ask about this quarter:
+        External Key Management on Azure Key Vault Managed HSM.</p>
+
+        <p>Preview. Gated. Not a personality trait. And if your first sentence
+        is “we need EKM because sovereignty”, I’m going to ask you to sit down,
+        drink some rooibos, and tell me which clause in SAMA CSF, NCA, NDMO,
+        ADHICS, or POPIA actually says the Key Encryption Key must live in a
+        box you can unplug in your own building.</p>
+
+        <p>Because most of the time, it doesn’t. Most of the time you want
+        customer-managed keys in Managed HSM, FIPS 140-3 Level 3, single-tenant,
+        you own the security domain, Microsoft never sees the key material.
+        That already satisfies a shocking amount of “we must control the keys”
+        conversation in KSA, the UAE, South Africa, Kenya, Nigeria, Egypt —
+        the whole lot.</p>
+
+        <p>EKM is the extra gear. The one you only engage when a contract, a
+        regulator, or a national-security brief says the KEK may not physically
+        sit on Microsoft iron. Then — and only then — you keep that KEK in
+        <em>your</em> HSM, on <em>your</em> floor, in Riyadh or Dubai or
+        Johannesburg, and Azure still encrypts storage, databases, disks, the
+        usual CMK story.</p>
+
+        <h2>What actually happens</h2>
+        <p>Azure Storage (or whatever CMK consumer you picked) still thinks it
+        is talking to a normal Managed HSM key. Managed HSM still does identity,
+        RBAC, and the Azure-shaped key URI. The cryptographic wrap/unwrap of
+        the data encryption key gets forwarded to a proxy you run, and that
+        proxy talks HSM-vendor to the box in your rack.</p>
+
+        <pre><code>Azure service (CMK)
+  -&gt; Managed HSM   # authz, key URI, audit
+    -&gt; EKM Proxy   # you run this, mTLS, public FQDN in preview
+      -&gt; your HSM  # KEK never leaves this thing
+
+# wrapKey / unwrapKey only
+# disconnect the HSM = cryptographic kill switch
+# also: you just inherited availability</code></pre>
+
+        <p>The KEK does not transit Microsoft. Microsoft does not get a copy.
+        That is the whole point, and it is a real one for digital sovereignty
+        conversations in the GCC and across Africa. You can yank the network,
+        power down the HSM, and every wrap/unwrap for that key stops. That is
+        a kill switch. It is also how you take production down with one bad
+        change window, so don’t get cute with it.</p>
+
+        <h2>Do not use this unless you have to</h2>
+        <p>I will say this louder for the people at the back of the boardroom.</p>
+        <p><strong>Do not run EKM as a flex.</strong> Official guidance calls
+        it a last-resort, gated option, and they are not being dramatic.</p>
+        <ul>
+          <li>No SLA on the external key, the proxy, or your HSM. Managed HSM’s
+          SLA covers Managed HSM up to the call. After that, it is your circus.</li>
+          <li>Every crypto op now includes a network round trip. Preview budget
+          is 250&nbsp;ms. Miss it and the unwrap fails. Storage doesn’t mount.
+          Someone’s Friday is ruined.</li>
+          <li>Wrap and unwrap only. No sign, verify, encrypt, decrypt, Secure
+          Key Release, Confidential VM launch. If you needed those, stay on
+          Managed HSM keys.</li>
+          <li>You patch, scale, monitor, and prove the proxy. Microsoft does
+          not ship one. Vendors do. You can write your own against the public
+          API. Either way, ops is on you.</li>
+          <li>Preview access is gated through your account team. There is a
+          serious commercial bar on it. This is not “turn it on in the portal
+          because the slide looked lekker.”</li>
+        </ul>
+
+        <p>If POPIA, SAMA, NCA ECC, NDMO, or ADHICS can be met with Managed HSM
+        keys plus the right landing zone, residency, and logging story — do
+        that. EKM is for the day a supervisor, a ministry, or a contract
+        literally requires physical custody outside the cloud operator.</p>
+
+        <h2>Trust model, without the fairy tales</h2>
+        <p>Preview networking is blunt: the proxy needs a public FQDN, public
+        IPv4, TCP 443, TLS 1.3, mutual TLS. Managed HSM source IPs are not
+        static, so you cannot firewall “only Azure”. The handshake is the
+        gate. Your proxy presents a server cert chained to a CA you register
+        on the connection. Managed HSM presents a Microsoft-issued client
+        cert. You pin the subject name and the root CAs, not a fingerprint,
+        because they rotate the client cert.</p>
+
+        <p>That last bit matters for sovereignty conversations in KSA and the
+        UAE. You own the KEK. You do not own the caller identity that Managed
+        HSM uses to knock on your proxy. AuthZ for “which Azure service may
+        use this key” lives in Managed HSM RBAC. Your on-prem HSM sees wrap
+        and unwrap from the proxy. It does not see the storage account’s
+        managed identity. If you were hoping the Luna or nShield would be
+        the identity-aware bouncer — eish, no. It is a crypto engine. The
+        bouncer is still in Azure.</p>
+
+        <p>So you design it like a grown-up: tight RBAC on the Managed HSM,
+        least-privilege managed identities, proxy that only accepts that
+        client cert, WAF and logging in front, HSM that is actually HA,
+        runbooks for cert rotation, and a tested “we pulled the kill switch”
+        drill that does not also brick the bank.</p>
+
+        <h2>Where this actually shows up</h2>
+        <p>This is the pattern I expect to argue about with customers in:</p>
+        <ul>
+          <li><strong>Saudi Arabia</strong> — NCA, NDMO, SAMA CSF, and the
+          broader national-data conversation. Residency in country is not
+          the same thing as “Microsoft never holds the KEK”. Separate those
+          two in the architecture decision record or you will have a messy
+          steering committee.</li>
+          <li><strong>UAE</strong> — ADHICS and sector regulators who want a
+          story for cryptographic control, not just a region checkbox.</li>
+          <li><strong>South Africa</strong> — POPIA, FSCA-shaped conversations,
+          and boards that still hear “the cloud has our keys” and stop
+          listening. Managed HSM keys usually land the plane. EKM is the
+          exception that needs a lawyer and an ops team, not a slogan.</li>
+          <li><strong>Rest of the continent</strong> — Kenya, Nigeria, Egypt,
+          and anyone writing a digital-sovereignty paper this year. Same
+          rule: start with Managed HSM. Escalate to EKM when the requirement
+          is physical custody, not vibes.</li>
+        </ul>
+
+        <p>Azure public regions are in scope for the preview. The sovereign
+        clouds are not. If your design assumed “this only exists in a special
+        cloud”, update the slide.</p>
+
+        <h2>If you still have to do it</h2>
+        <p>Then do it properly. Vendor-supported proxy from someone who has
+        actually implemented the spec — Entrust, Thales, Fortanix, Securosys,
+        Futurex, Utimaco, Eviden, and whoever else is on the current list —
+        or a proxy you are prepared to own like production software. HA HSM.
+        HA proxy. Cert lifecycle. 250&nbsp;ms path from Managed HSM to the
+        box. Logging on both sides. A restore story that does not include
+        “restore the external key from Managed HSM backup”, because that is
+        not supported and can leave the pool in a state you will not enjoy.</p>
+
+        <p>A mate of mine already published a lab walkthrough of standing the
+        proxy up and watching wrap/unwrap on the wire. Different post, same
+        feature, he did the messy bits with a real endpoint. I’m not
+        photocopying his homework. Read
+        <a href="https://blog.azureinfra.com/2026/07/08/external-key-management-in-managed-hsm/">his write-up</a>
+        if you want the lab scars. Then come back here when the conversation
+        is “does SAMA actually require this, or do we just like the kill
+        switch on the slide.”</p>
+
+        <p>Opinions mine. Preview features move. Check current docs before you
+        promise a regulator anything.</p>
+
+        <p>See also:
+        <a href="https://learn.microsoft.com/azure/key-vault/managed-hsm/external-key-management-overview">What is Managed HSM external key management?</a>
+        ·
+        <a href="https://learn.microsoft.com/azure/azure-sovereign-clouds/public/external-key-management">External Key Management in Sovereign Public Cloud</a></p>
+      </article>
+      <p class="prompt">warren@initwaza:~$ <span class="cursor">▊</span></p>
+    </div>
+  </div>
+</main>
+
+<footer>
+  <p>© 2026 Warren du Toit · opinions my own</p>
+</footer>
+
+<script src="/assets/js/main.js"></script>
+</body>
+</html>

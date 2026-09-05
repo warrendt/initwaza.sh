@@ -3,11 +3,19 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-8K72MTVLYD"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-8K72MTVLYD');
+  </script>
   <title>initwaza.sh — Warren du Toit</title>
-  <meta name="description" content="Warren du Toit — Cloud Solution Architect at Microsoft South Africa. Sovereign cloud, Azure networking at scale, homelab, Klipper 3D printing.">
+  <meta name="description" content="Warren du Toit — Cloud Solution Architect at Microsoft South Africa. Sovereign cloud, Azure networking at scale, local AI, making, and 3D printing.">
   <meta name="theme-color" content="#0d1117">
   <meta property="og:title" content="initwaza.sh — Warren du Toit">
-  <meta property="og:description" content="Sovereign cloud · Azure networking · homelab · 3D printing">
+  <meta property="og:description" content="Sovereign cloud · Azure networking · local AI · making · 3D printing">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://initwaza.sh/">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>💾</text></svg>">
@@ -53,6 +61,10 @@
       <p class="prompt">warren@initwaza:~$ <span class="cmd">ls -lt posts/ | head</span></p>
       <ul class="post-list">
         <li>
+          <time datetime="2026-09-05">2026-09-05</time>
+          <a href="/posts/ekm-managed-hsm.html">ekm.sh — keep the keys in KSA, UAE, and ZA</a>
+        </li>
+        <li>
           <time datetime="2026-06-10">2026-06-10</time>
           <a href="/posts/hello-world.html">hello-world.sh — why this blog moved to a .sh domain</a>
         </li>
@@ -60,11 +72,61 @@
       </ul>
       <p class="more"><a href="/posts.html">cat posts/* →</a></p>
 
-      <p class="prompt">warren@initwaza:~$ <span class="cmd">ls homelab/</span></p>
-      <ul class="tags dim">
-        <li>MikroTik</li><li>Rocky Linux</li><li>Podman</li><li>n8n</li>
-        <li>LiteLLM</li><li>Ollama</li><li>Klipper</li><li>Voron 2.4 StealthChanger</li>
-      </ul>
+      <p class="prompt">warren@initwaza:~$ <span class="cmd">ls -lha interests/</span></p>
+      <table class="interest-list" aria-label="Interests">
+        <thead>
+          <tr>
+            <th scope="col">mode</th>
+            <th scope="col">updated</th>
+            <th scope="col">name</th>
+            <th scope="col">notes</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>drwxr-xr-x</td>
+            <td><time datetime="2026-07">Jul 2026</time></td>
+            <td>self-hosting/</td>
+            <td>Rocky Linux, Podman, MikroTik, Synology, and services that should probably have runbooks.</td>
+          </tr>
+          <tr>
+            <td>drwxr-xr-x</td>
+            <td><time datetime="2026-07">Jul 2026</time></td>
+            <td>local-ai/</td>
+            <td>n8n, LiteLLM, Ollama, OpenWebUI, agent workflows, and practical automation.</td>
+          </tr>
+          <tr>
+            <td>drwxr-xr-x</td>
+            <td><time datetime="2026-06">Jun 2026</time></td>
+            <td>3d-printing/</td>
+            <td>Klipper-based CoreXY builds, currently a Voron 2.4 StealthChanger multi-tool machine.</td>
+          </tr>
+          <tr>
+            <td>drwxr-xr-x</td>
+            <td><time datetime="2026-06">Jun 2026</time></td>
+            <td>electronics/</td>
+            <td>ESP8266 boards, sensors, small automations, and the usual box of almost-finished projects.</td>
+          </tr>
+          <tr>
+            <td>drwxr-xr-x</td>
+            <td><time datetime="2026-05">May 2026</time></td>
+            <td>making/</td>
+            <td>Laser engraving, workshop tinkering, repair rabbit holes, and tools that need more shelves.</td>
+          </tr>
+          <tr>
+            <td>drwxr-xr-x</td>
+            <td><time datetime="2026-04">Apr 2026</time></td>
+            <td>pokemon-tcg/</td>
+            <td>Judging, rules archaeology, tournament operations, and cardboard-powered decision trees.</td>
+          </tr>
+          <tr>
+            <td>drwxr-xr-x</td>
+            <td><time datetime="2026-04">Apr 2026</time></td>
+            <td>djing/</td>
+            <td>Music, mixes, crates, transitions, and occasionally remembering where the cue button is.</td>
+          </tr>
+        </tbody>
+      </table>
 
       <p class="prompt">warren@initwaza:~$ <span class="cmd">cat contact.txt</span></p>
       <ul class="contact">

@@ -121,7 +121,7 @@ h2 { font-size: 1.2em; margin: .2rem 0; }
 .sub { margin: 0; color: var(--fg); }
 .tagline { margin: .3rem 0 0; color: var(--dim); }
 
-/* skill / homelab chips */
+/* skill chips */
 .tags { list-style: none; padding: 0; margin: 0; display: flex; flex-wrap: wrap; gap: .45rem; }
 .tags li {
   border: 1px solid var(--border);
@@ -130,6 +130,31 @@ h2 { font-size: 1.2em; margin: .2rem 0; }
   font-size: .85em;
 }
 .tags.dim li { color: var(--dim); }
+
+/* ls-style interests listing */
+.interest-list {
+  width: 100%;
+  border-collapse: collapse;
+  color: var(--dim);
+  font-size: .88em;
+}
+.interest-list th {
+  color: var(--fg);
+  font-weight: 400;
+  text-align: left;
+}
+.interest-list th,
+.interest-list td {
+  padding: .12rem .8rem .12rem 0;
+  vertical-align: top;
+}
+.interest-list td:nth-child(3) {
+  color: var(--link);
+  white-space: nowrap;
+}
+.interest-list td:nth-child(4) {
+  color: var(--fg);
+}
 
 /* post list */
 .post-list { list-style: none; padding: 0; margin: 0; }
@@ -177,4 +202,26 @@ footer {
 @media (max-width: 600px) {
   body { font-size: 14px; }
   .tty { padding: 1rem; }
+  .interest-list,
+  .interest-list thead,
+  .interest-list tbody,
+  .interest-list tr,
+  .interest-list th,
+  .interest-list td {
+    display: block;
+  }
+  .interest-list thead {
+    display: none;
+  }
+  .interest-list tr {
+    margin: 0 0 .7rem;
+  }
+  .interest-list td {
+    padding: 0;
+  }
+  .interest-list td:nth-child(1),
+  .interest-list td:nth-child(2) {
+    display: inline;
+    margin-right: .5rem;
+  }
 }
