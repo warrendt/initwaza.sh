@@ -32,7 +32,7 @@
     "initwaza.sh v1.0 — bringing system up",
     "[ <span class=\"ok\">OK</span> ] mounted /home/warren",
     "[ <span class=\"ok\">OK</span> ] started azure-sovereign-cloud.service",
-    "[ <span class=\"ok\">OK</span> ] started homelab.target (mikrotik, podman, klipper)",
+    "[ <span class=\"ok\">OK</span> ] started interests.target (local-ai, making, klipper)",
     "[ <span class=\"ok\">OK</span> ] reached target multi-user.target",
     "&nbsp;"
   ];
