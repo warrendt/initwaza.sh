@@ -160,6 +160,7 @@ h2 { font-size: 1.2em; margin: .2rem 0; }
 .post-list { list-style: none; padding: 0; margin: 0; }
 .post-list li { margin: .35rem 0; display: flex; gap: 1rem; flex-wrap: wrap; }
 .post-list time { color: var(--dim); white-space: nowrap; }
+.post-list span { color: var(--fg); }
 .more { margin: .6rem 0 0; }
 
 /* contact */
